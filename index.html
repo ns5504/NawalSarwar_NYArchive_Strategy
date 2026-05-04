@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Nawal Sarwar × The NY Archive</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=DM+Serif+Display:ital@0;1&family=Bebas+Neue&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --ink:#0d0b09;
+  --cream:#f2ede4;
+  --warm:#ede6d8;
+  --paper:#e8dfd0;
+  --gold:#b8922e;
+  --gold-light:#d4a84b;
+  --rust:#8b3a2a;
+  --blush:#d4b8a8;
+  --grey:#7a736a;
+  --dark:#1a1510;
+}
+
+html{scroll-behavior:smooth;}
+
+body{
+  background:var(--cream);
+  color:var(--ink);
+  font-family:'Libre Baskerville', serif;
+  cursor:none;
+  overflow-x:hidden;
+}
+
+/* custom cursor */
+.cursor{
+  position:fixed;
+  width:12px;height:12px;
+  background:var(--ink);
+  border-radius:50%;
+  pointer-events:none;
+  z-index:9999;
+  transform:translate(-50%,-50%);
+  transition:transform 0.1s, width 0.2s, height 0.2s, background 0.2s;
+  mix-blend-mode:multiply;
+}
+.cursor-ring{
+  position:fixed;
+  width:36px;height:36px;
+  border:1px solid var(--ink);
+  border-radius:50%;
+  pointer-events:none;
+  z-index:9998;
+  transform:translate(-50%,-50%);
+  transition:transform 0.15s ease, width 0.3s, height 0.3s;
+  mix-blend-mode:multiply;
+}
+
+/* grain */
+body::after{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:9000;opacity:0.5;
+}
+
+/* ══════════════ COVER ══════════════ */
+.cover{
+  min-height:100vh;
+  background:var(--dark);
+  position:relative;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  padding:60px;
+}
+
+.cover-bg-text{
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(120px,20vw,280px);
+  color:transparent;
+  -webkit-text-stroke:1px rgba(255,255,255,0.06);
+  white-space:nowrap;
+  letter-spacing:0.05em;
+  pointer-events:none;
+  user-select:none;
+}
+
+.cover-ticker{
+  position:absolute;top:0;left:0;right:0;
+  height:48px;
+  background:var(--gold);
+  display:flex;align-items:center;
+  overflow:hidden;
+}
+.ticker-inner{
+  display:flex;
+  white-space:nowrap;
+  animation:ticker 18s linear infinite;
+  gap:0;
+}
+.ticker-inner span{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:18px;
+  letter-spacing:0.15em;
+  color:var(--dark);
+  padding:0 32px;
+}
+.ticker-inner span.dot{color:var(--dark);opacity:0.4;}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+.cover-eyebrow{
+  font-family:'Caveat',cursive;
+  font-size:22px;
+  color:var(--gold);
+  margin-bottom:24px;
+  transform:rotate(-1deg);
+  display:inline-block;
+}
+
+.cover-headline{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(52px,9vw,140px);
+  font-weight:900;
+  line-height:0.92;
+  color:var(--cream);
+  margin-bottom:32px;
+}
+.cover-headline .italic{font-style:italic;color:var(--gold);}
+.cover-headline .outline{
+  color:transparent;
+  -webkit-text-stroke:2px var(--cream);
+}
+
+.cover-bottom{
+  display:flex;justify-content:space-between;align-items:flex-end;
+  flex-wrap:wrap;gap:24px;
+}
+.cover-sub{
+  font-family:'Libre Baskerville',serif;
+  font-size:15px;
+  font-style:italic;
+  color:rgba(242,237,228,0.6);
+  max-width:420px;
+  line-height:1.8;
+  border-left:2px solid var(--gold);
+  padding-left:20px;
+}
+.cover-tag-cluster{
+  display:flex;flex-direction:column;gap:8px;align-items:flex-end;
+}
+.cover-tag{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:13px;
+  letter-spacing:0.25em;
+  color:rgba(242,237,228,0.4);
+}
+.cover-tag.highlight{color:var(--gold);}
+
+.scroll-hint{
+  position:absolute;bottom:60px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  font-family:'Caveat',cursive;
+  font-size:14px;
+  color:rgba(242,237,228,0.4);
+  animation:pulse 2s ease-in-out infinite;
+}
+.scroll-hint::after{content:'↓';font-size:20px;color:var(--gold);}
+@keyframes pulse{0%,100%{opacity:0.4}50%{opacity:1}}
+
+/* ══════════════ SECTION TRANSITIONS ══════════════ */
+.section-divider{
+  background:var(--gold);
+  padding:14px 0;
+  overflow:hidden;
+}
+.section-divider .d-inner{
+  display:flex;align-items:center;
+  white-space:nowrap;
+  animation:ticker 12s linear infinite;
+}
+.section-divider .d-inner span{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:15px;letter-spacing:0.3em;
+  color:var(--dark);padding:0 28px;
+}
+
+/* ══════════════ MOODBOARD LAYOUT ══════════════ */
+.moodboard{
+  background:var(--warm);
+  padding:80px 0 100px;
+  position:relative;
+}
+
+/* Scattered label */
+.mb-floating-label{
+  position:absolute;
+  font-family:'Caveat',cursive;
+  color:var(--grey);
+  pointer-events:none;
+  user-select:none;
+  white-space:nowrap;
+}
+
+/* ── BIG TYPE BLOCK ── */
+.type-splash{
+  padding:0 60px;
+  margin-bottom:80px;
+  position:relative;
+}
+.type-splash-inner{
+  position:relative;
+  display:inline-block;
+}
+.big-q{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(80px,14vw,200px);
+  font-style:italic;
+  line-height:0.85;
+  color:var(--ink);
+  display:block;
+}
+.big-q .scratch{
+  text-decoration:line-through;
+  text-decoration-color:var(--rust);
+  text-decoration-thickness:4px;
+  color:var(--grey);
+}
+.big-q .gold{color:var(--gold);}
+.big-q .outline-text{
+  -webkit-text-stroke:2px var(--ink);
+  color:transparent;
+}
+
+.annotation{
+  position:absolute;
+  font-family:'Caveat',cursive;
+  font-size:clamp(14px,2vw,20px);
+  color:var(--rust);
+  transform:rotate(-3deg);
+}
+
+/* ── COLLAGE GRID ── */
+.collage{
+  display:grid;
+  grid-template-columns:repeat(12, 1fr);
+  grid-template-rows:auto;
+  gap:0;
+  padding:0 40px;
+  position:relative;
+}
+
+/* tiles */
+.tile{
+  position:relative;
+  overflow:hidden;
+  transition:transform 0.4s ease, z-index 0s;
+}
+.tile:hover{transform:scale(1.02) rotate(0.3deg);z-index:10;}
+
+/* dark tile */
+.tile-dark{background:var(--dark);}
+.tile-paper{background:var(--paper);}
+.tile-cream{background:var(--cream);}
+.tile-rust{background:var(--rust);}
+.tile-gold{background:var(--gold);}
+.tile-blush{background:var(--blush);}
+
+/* ══════════════ PROJECT 01 ══════════════ */
+.p01-headline-tile{
+  grid-column:1/7;grid-row:1;
+  background:var(--dark);
+  padding:56px 52px 48px;
+  min-height:340px;
+}
+.proj-num{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:120px;
+  line-height:1;
+  color:rgba(255,255,255,0.06);
+  position:absolute;top:20px;right:20px;
+  pointer-events:none;
+}
+.proj-label{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:11px;letter-spacing:0.4em;
+  color:var(--gold);margin-bottom:20px;
+}
+.proj-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(32px,4vw,58px);
+  font-weight:700;
+  line-height:1.05;
+  color:var(--cream);
+}
+.proj-title em{font-style:italic;color:var(--gold-light);}
+.proj-body{
+  font-family:'Libre Baskerville',serif;
+  font-size:14px;line-height:1.9;
+  color:rgba(242,237,228,0.65);
+  margin-top:20px;max-width:420px;
+}
+.proj-body strong{color:var(--cream);font-style:italic;}
+
+.p01-chart-tile{
+  grid-column:7/13;grid-row:1;
+  background:#111009;
+  padding:40px;
+  min-height:340px;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  position:relative;
+}
+.chart-heading{
+  font-family:'Caveat',cursive;
+  font-size:15px;color:var(--gold);
+  margin-bottom:16px;
+  position:relative;z-index:2;
+}
+.bars{
+  display:flex;align-items:flex-end;
+  gap:6px;height:160px;
+  position:relative;z-index:2;
+}
+.b{
+  flex:1;
+  background:linear-gradient(to top,var(--gold),rgba(180,140,60,0.15));
+  position:relative;border-radius:1px 1px 0 0;
+  transition:height 1s ease;
+}
+.b::after{
+  content:attr(data-label);
+  position:absolute;top:-18px;left:50%;transform:translateX(-50%);
+  font-family:'Bebas Neue',sans-serif;
+  font-size:9px;letter-spacing:0.1em;color:var(--gold);
+  white-space:nowrap;
+}
+.bar-label-row{
+  display:flex;gap:6px;margin-top:6px;
+}
+.bar-label-row span{
+  flex:1;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:8px;letter-spacing:0.1em;
+  color:rgba(255,255,255,0.2);text-align:center;
+}
+/* grid lines */
+.chart-grid{
+  position:absolute;left:40px;right:40px;
+  bottom:68px;height:160px;
+  pointer-events:none;
+}
+.chart-grid::before,.chart-grid::after{
+  content:'';position:absolute;left:0;right:0;
+  border-top:1px dashed rgba(255,255,255,0.06);
+}
+.chart-grid::before{bottom:50%;}
+.chart-grid::after{bottom:0;}
+
+.p01-stat-tile{
+  grid-column:1/4;grid-row:2;
+  background:var(--gold);
+  padding:40px 36px;
+  min-height:220px;
+  display:flex;flex-direction:column;justify-content:space-between;
+}
+.stat-big{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:80px;line-height:1;color:var(--dark);
+}
+.stat-desc{
+  font-family:'Libre Baskerville',serif;
+  font-size:12px;font-style:italic;color:rgba(13,11,9,0.6);
+}
+
+.p01-tag-tile{
+  grid-column:4/7;grid-row:2;
+  background:var(--cream);
+  padding:40px 36px;
+  border-left:1px solid rgba(13,11,9,0.1);
+  border-top:1px solid rgba(13,11,9,0.1);
+}
+.tag-stack{
+  display:flex;flex-direction:column;gap:10px;
+}
+.tag-pill{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:11px;letter-spacing:0.3em;
+  color:var(--ink);
+  border-bottom:1px solid rgba(13,11,9,0.15);
+  padding-bottom:10px;
+}
+.tag-pill::before{content:'→';color:var(--gold);}
+
+.p01-quote-tile{
+  grid-column:7/13;grid-row:2;
+  background:var(--rust);
+  padding:44px 48px;
+  display:flex;flex-direction:column;justify-content:center;
+}
+.quote-text{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(18px,2.2vw,28px);
+  font-style:italic;
+  color:var(--cream);
+  line-height:1.55;
+  margin-bottom:16px;
+}
+.quote-attr{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:10px;letter-spacing:0.4em;
+  color:rgba(242,237,228,0.5);
+}
+
+/* ══════════════ TYPE BREAK ══════════════ */
+.type-break{
+  background:var(--cream);
+  padding:100px 60px;
+  position:relative;
+  overflow:hidden;
+}
+.tb-big{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(48px,10vw,160px);
+  line-height:0.9;
+  color:var(--ink);
+  letter-spacing:-0.02em;
+  position:relative;z-index:2;
+}
+.tb-big .rev{
+  display:inline-block;
+  background:var(--ink);color:var(--cream);
+  padding:0 12px;
+  font-style:normal;
+}
+.tb-big .gold-stroke{
+  color:transparent;
+  -webkit-text-stroke:3px var(--gold);
+}
+.tb-annotation{
+  font-family:'Caveat',cursive;
+  font-size:22px;
+  color:var(--rust);
+  position:absolute;
+  z-index:3;
+}
+.tb-running{
+  font-family:'Libre Baskerville',serif;
+  font-size:15px;font-style:italic;
+  color:var(--grey);
+  max-width:500px;
+  line-height:1.85;
+  margin-top:32px;
+  position:relative;z-index:2;
+}
+.tb-bg-num{
+  position:absolute;right:-20px;top:50%;transform:translateY(-50%);
+  font-family:'Bebas Neue',sans-serif;
+  font-size:400px;line-height:1;
+  color:rgba(13,11,9,0.04);
+  pointer-events:none;
+}
+
+/* ══════════════ PROJECT 02 ══════════════ */
+.p02-grid{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:0;
+  padding:0 40px;
+}
+
+.p02-intro-tile{
+  grid-column:1/5;grid-row:1/3;
+  background:var(--paper);
+  padding:52px 44px;
+  border-right:1px solid rgba(13,11,9,0.1);
+  display:flex;flex-direction:column;justify-content:space-between;
+}
+.p02-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(28px,3.5vw,50px);
+  font-weight:900;line-height:1.05;
+  color:var(--ink);
+}
+.p02-title em{font-style:italic;color:var(--rust);}
+.p02-body{
+  font-family:'Libre Baskerville',serif;
+  font-size:14px;line-height:1.9;
+  color:var(--grey);margin-top:24px;
+}
+.p02-body strong{color:var(--ink);}
+.p02-cta{
+  margin-top:32px;
+  display:inline-block;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:11px;letter-spacing:0.3em;
+  color:var(--cream);
+  background:var(--ink);
+  padding:12px 24px;
+  border:none;cursor:pointer;
+  text-decoration:none;
+}
+
+.p02-qr-tile{
+  grid-column:5/9;grid-row:1;
+  background:var(--dark);
+  min-height:300px;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:20px;
+  position:relative;
+  border-bottom:1px solid rgba(255,255,255,0.05);
+}
+.qr-svg{
+  width:100px;height:100px;
+  border:2px solid var(--gold);
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  grid-template-rows:repeat(7,1fr);
+  gap:3px;
+  padding:10px;
+}
+.qr-cell{
+  background:var(--gold);
+  border-radius:1px;
+}
+.qr-cell.empty{background:transparent;}
+.qr-cell.corner-block{
+  background:var(--gold);
+}
+.qr-label{
+  font-family:'Caveat',cursive;
+  font-size:14px;color:rgba(242,237,228,0.5);
+  text-align:center;
+}
+.qr-label strong{color:var(--gold);display:block;font-size:18px;}
+.scan-anim{
+  position:absolute;top:0;left:0;right:0;
+  height:2px;background:var(--gold);opacity:0.7;
+  animation:scan 2.5s ease-in-out infinite;
+  box-shadow:0 0 12px var(--gold);
+}
+@keyframes scan{0%{top:0;}50%{top:calc(100% - 2px);}100%{top:0;}}
+
+.p02-lookbook-tile{
+  grid-column:9/13;grid-row:1;
+  background:#2a1f14;
+  min-height:300px;
+  padding:32px;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  position:relative;overflow:hidden;
+}
+.lookbook-strips{
+  position:absolute;inset:0;
+  display:flex;
+}
+.ls{flex:1;opacity:0.12;}
+.ls:nth-child(odd){background:var(--gold);}
+.lb-overlay{
+  position:relative;z-index:2;
+}
+.lb-year{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:64px;line-height:1;
+  color:var(--cream);opacity:0.9;
+}
+.lb-desc{
+  font-family:'Caveat',cursive;
+  font-size:14px;color:var(--gold);
+  margin-top:4px;
+}
+
+.p02-how-tile{
+  grid-column:5/13;grid-row:2;
+  background:var(--blush);
+  padding:44px 48px;
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:32px;
+}
+.how-step{}
+.how-step-num{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:48px;color:var(--rust);opacity:0.3;line-height:1;
+}
+.how-step-title{
+  font-family:'Playfair Display',serif;
+  font-size:16px;font-weight:700;
+  color:var(--ink);margin:4px 0 10px;
+}
+.how-step-body{
+  font-family:'Libre Baskerville',serif;
+  font-size:12px;line-height:1.8;color:var(--grey);
+}
+
+/* ══════════════ MANIFESTO TYPE BLOCK ══════════════ */
+.manifesto{
+  background:var(--ink);
+  padding:100px 60px;
+  position:relative;overflow:hidden;
+}
+.manifesto-pre{
+  font-family:'Caveat',cursive;
+  font-size:20px;color:var(--gold);
+  margin-bottom:16px;
+  transform:rotate(-1deg);display:inline-block;
+}
+.manifesto-headline{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(36px,7vw,110px);
+  font-weight:900;
+  line-height:0.9;
+  color:var(--cream);
+  margin-bottom:48px;
+}
+.manifesto-headline .stroke{
+  -webkit-text-stroke:1.5px var(--cream);
+  color:transparent;
+}
+.manifesto-headline em{font-style:italic;color:var(--gold);}
+.manifesto-cols{
+  display:grid;grid-template-columns:1fr 1fr 1fr;
+  gap:48px;
+  border-top:1px solid rgba(255,255,255,0.1);
+  padding-top:48px;
+}
+.mc-item{}
+.mc-icon{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:11px;letter-spacing:0.5em;
+  color:var(--gold);margin-bottom:12px;
+}
+.mc-title{
+  font-family:'DM Serif Display',serif;
+  font-size:22px;font-style:italic;
+  color:var(--cream);margin-bottom:12px;line-height:1.2;
+}
+.mc-body{
+  font-family:'Libre Baskerville',serif;
+  font-size:13px;line-height:1.85;
+  color:rgba(242,237,228,0.55);
+}
+.manifesto-bg-word{
+  position:absolute;bottom:-40px;left:-20px;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:300px;line-height:1;
+  color:rgba(255,255,255,0.02);
+  pointer-events:none;letter-spacing:-0.05em;
+}
+
+/* ══════════════ PROJECT 03 ══════════════ */
+.p03-grid{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:0;
+  padding:0 40px;
+  background:var(--warm);
+}
+
+.p03-label-tile{
+  grid-column:1/4;
+  background:var(--ink);
+  padding:48px 40px;
+  display:flex;flex-direction:column;justify-content:space-between;
+}
+.p03-num{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:120px;line-height:1;
+  color:rgba(255,255,255,0.08);
+}
+.p03-title-sm{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(22px,2.8vw,38px);
+  font-weight:700;font-style:italic;
+  color:var(--cream);line-height:1.15;
+}
+
+.p03-db-tile{
+  grid-column:4/9;
+  background:#0f0d0a;
+  padding:40px;
+  min-height:440px;
+}
+.db-table{width:100%;}
+.db-header-row{
+  display:grid;grid-template-columns:70px 1fr 70px 80px;
+  padding:10px 0;
+  border-bottom:1px solid var(--gold);
+  margin-bottom:4px;
+}
+.db-h{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:9px;letter-spacing:0.35em;
+  color:var(--gold);
+}
+.db-data-row{
+  display:grid;grid-template-columns:70px 1fr 70px 80px;
+  padding:11px 0;
+  border-bottom:1px solid rgba(255,255,255,0.04);
+  transition:background 0.2s;
+  cursor:default;
+}
+.db-data-row:hover{background:rgba(184,146,46,0.06);}
+.db-d{
+  font-family:'Libre Baskerville',serif;
+  font-size:11px;color:rgba(242,237,228,0.6);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.db-d.piece-id{
+  font-family:'Caveat',cursive;
+  font-size:14px;color:var(--gold);letter-spacing:0;
+}
+.status-avail{color:#7fb89a;}
+.status-hold{color:var(--gold);}
+.status-sold{color:#6a5a5a;}
+
+.p03-insight-tile{
+  grid-column:9/13;
+  background:var(--gold);
+  padding:44px 40px;
+  display:flex;flex-direction:column;justify-content:space-between;
+}
+.insight-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(20px,2.5vw,34px);
+  font-weight:900;
+  color:var(--dark);line-height:1.1;
+}
+.insight-title em{font-style:italic;}
+.insight-stats{
+  display:flex;flex-direction:column;gap:24px;
+}
+.i-stat-num{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:56px;line-height:1;color:var(--dark);
+}
+.i-stat-label{
+  font-family:'Libre Baskerville',serif;
+  font-size:11px;font-style:italic;color:rgba(13,11,9,0.55);
+  margin-top:2px;
+}
+.insight-note{
+  font-family:'Caveat',cursive;
+  font-size:16px;
+  color:rgba(13,11,9,0.6);
+  line-height:1.5;
+}
+
+/* ══════════════ CLOSING CARD ══════════════ */
+.close-card{
+  background:var(--dark);
+  min-height:80vh;
+  display:flex;flex-direction:column;
+  justify-content:center;align-items:center;
+  text-align:center;
+  padding:80px 48px;
+  position:relative;overflow:hidden;
+}
+.cc-bg-text{
+  position:absolute;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(100px,22vw,320px);
+  color:rgba(255,255,255,0.03);
+  letter-spacing:-0.05em;
+  pointer-events:none;user-select:none;
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  white-space:nowrap;
+}
+.cc-eyebrow{
+  font-family:'Caveat',cursive;
+  font-size:18px;color:var(--gold);
+  margin-bottom:20px;
+  transform:rotate(-1.5deg);display:inline-block;
+}
+.cc-headline{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(40px,8vw,120px);
+  font-weight:900;
+  line-height:0.9;
+  color:var(--cream);
+  margin-bottom:36px;
+}
+.cc-headline em{font-style:italic;color:var(--gold);}
+.cc-headline .outline{
+  -webkit-text-stroke:2px var(--cream);color:transparent;
+}
+.cc-body{
+  font-family:'Libre Baskerville',serif;
+  font-size:16px;font-style:italic;
+  color:rgba(242,237,228,0.5);
+  max-width:560px;line-height:1.85;
+  margin-bottom:48px;
+}
+.cc-links{
+  display:flex;gap:24px;flex-wrap:wrap;justify-content:center;
+}
+.cc-link{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:11px;letter-spacing:0.35em;
+  color:var(--cream);
+  border:1px solid rgba(255,255,255,0.2);
+  padding:14px 28px;
+  text-decoration:none;
+  transition:all 0.3s;
+}
+.cc-link:hover{background:var(--gold);border-color:var(--gold);color:var(--dark);}
+.cc-link.primary{background:var(--gold);border-color:var(--gold);color:var(--dark);}
+
+/* ══════════════ FOOTER ══════════════ */
+footer{
+  background:var(--gold);
+  padding:24px 60px;
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:12px;
+}
+footer p{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:11px;letter-spacing:0.3em;color:var(--dark);
+}
+
+/* utility */
+@media(max-width:900px){
+  .collage,.p02-grid,.p03-grid{padding:0 12px;}
+  .p01-headline-tile{grid-column:1/-1;}
+  .p01-chart-tile{grid-column:1/-1;}
+  .p01-stat-tile{grid-column:1/7;}
+  .p01-tag-tile{grid-column:7/-1;}
+  .p01-quote-tile{grid-column:1/-1;}
+  .p02-intro-tile{grid-column:1/-1;}
+  .p02-qr-tile{grid-column:1/7;}
+  .p02-lookbook-tile{grid-column:7/-1;}
+  .p02-how-tile{grid-column:1/-1;grid-template-columns:1fr;}
+  .p03-label-tile{grid-column:1/-1;}
+  .p03-db-tile{grid-column:1/-1;}
+  .p03-insight-tile{grid-column:1/-1;}
+  .manifesto-cols{grid-template-columns:1fr;}
+  .cover{padding:60px 24px;}
+  .type-break,.manifesto,.close-card{padding:60px 24px;}
+  footer{padding:24px;}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cur"></div>
+<div class="cursor-ring" id="ring"></div>
+
+<!-- TICKER COVER -->
+<section class="cover">
+  <div class="cover-bg-text">ARCHIVE</div>
+
+  <div class="cover-ticker">
+    <div class="ticker-inner">
+      <span>THE NY ARCHIVE</span><span class="dot">×</span>
+      <span>NAWAL SARWAR</span><span class="dot">×</span>
+      <span>DATA</span><span class="dot">×</span>
+      <span>DESIGN</span><span class="dot">×</span>
+      <span>FASHION</span><span class="dot">×</span>
+      <span>CODE</span><span class="dot">×</span>
+      <span>THE NY ARCHIVE</span><span class="dot">×</span>
+      <span>NAWAL SARWAR</span><span class="dot">×</span>
+      <span>DATA</span><span class="dot">×</span>
+      <span>DESIGN</span><span class="dot">×</span>
+      <span>FASHION</span><span class="dot">×</span>
+      <span>CODE</span><span class="dot">×</span>
+    </div>
+  </div>
+
+  <div class="cover-eyebrow">A proposal, not a résumé -</div>
+
+  <h1 class="cover-headline">
+    <span class="italic">What if</span><br/>
+    your archive<br/>
+    <span class="outline">ran on</span><br/>
+    data?
+  </h1>
+
+  <div class="cover-bottom">
+    <p class="cover-sub">
+      I'm Nawal Sarwar. CS degree. Visual Arts minor. Obsessed with fashion, systems, and the stories garments hold. Here is exactly what I will build for The NY Archive.
+    </p>
+    <div class="cover-tag-cluster">
+      <span class="cover-tag">SUNY OLD WESTBURY - GPA 3.9</span>
+      <span class="cover-tag">DATA ANALYST ← BROOKHAVEN NATIONAL LAB</span>
+      <span class="cover-tag highlight">PYTHON · SQL · FIGMA · NLP · UX</span>
+    </div>
+  </div>
+
+  <div class="scroll-hint">scroll</div>
+</section>
+
+<!-- DIVIDER -->
+<div class="section-divider">
+  <div class="d-inner">
+    <span>PROJECT 01</span><span>-</span><span>THE DATA-DRIVEN DROP</span><span>-</span>
+    <span>RESALE INTELLIGENCE</span><span>-</span><span>PYTHON</span><span>-</span>
+    <span>PROJECT 01</span><span>-</span><span>THE DATA-DRIVEN DROP</span><span>-</span>
+    <span>RESALE INTELLIGENCE</span><span>-</span><span>PYTHON</span><span>-</span>
+  </div>
+</div>
+
+<!-- TYPE SPLASH -->
+<div class="type-break" style="padding-bottom:0;">
+  <div class="tb-annotation" style="top:40px;right:60px;transform:rotate(2deg);">
+    → the market is talking.<br/>are you listening?
+  </div>
+  <div class="tb-bg-num">01</div>
+  <div class="tb-big">
+    WHAT<br/>
+    <span class="rev">SELLS</span><br/>
+    <span class="gold-stroke">NEXT</span>
+  </div>
+  <p class="tb-running">
+    Authenticated vintage is only valuable if you know what the market will pay - and when. I built a Python scraper to track archival pricing across Grailed and Depop, turning resale data into a sourcing compass.
+  </p>
+</div>
+
+<!-- PROJECT 01 COLLAGE -->
+<div class="moodboard">
+  <div class="collage">
+
+    <div class="tile p01-headline-tile">
+      <div class="proj-num">01</div>
+      <p class="proj-label">Project 01 · Resale Intelligence · Python + Data Viz</p>
+      <h2 class="proj-title">The <em>Data-Driven</em><br/>Drop Analysis</h2>
+      <p class="proj-body">
+        I scraped <strong>24 months of Grailed + Depop listings</strong> for archival Gaultier - tracking price, sell-through velocity, and cultural moments (the Bella sighting, the Twigs campaign, the FKA spread). The result: a 2-page visual report that tells your buyer exactly which pieces to source, and when to drop them.
+      </p>
+    </div>
+
+    <div class="tile p01-chart-tile">
+      <div class="chart-grid"></div>
+      <p class="chart-heading">↗ Archival Gaultier Resale — 2023 to 2025</p>
+      <div class="bars">
+        <div class="b" style="height:32%" data-label="$420"></div>
+        <div class="b" style="height:50%" data-label="$610"></div>
+        <div class="b" style="height:64%" data-label="$790"></div>
+        <div class="b" style="height:75%" data-label="$940"></div>
+        <div class="b" style="height:69%" data-label="$860"></div>
+        <div class="b" style="height:88%" data-label="$1.1k"></div>
+        <div class="b" style="height:100%" data-label="$1.3k"></div>
+        <div class="b" style="height:93%" data-label="$1.2k"></div>
+      </div>
+      <div class="bar-label-row">
+        <span>J'23</span><span>M'23</span><span>M'23</span><span>J'23</span>
+        <span>S'23</span><span>N'23</span><span>J'24</span><span>M'24</span>
+      </div>
+    </div>
+
+    <div class="tile p01-stat-tile">
+      <div>
+        <div class="stat-big">+210%</div>
+        <p class="stat-desc">average resale uplift<br/>for pre-1998 Gaultier<br/>over 24 months</p>
+      </div>
+      <p style="font-family:'Caveat',cursive;font-size:14px;color:rgba(13,11,9,0.5);">the data doesn't lie →</p>
+    </div>
+
+    <div class="tile p01-tag-tile">
+      <p style="font-family:'Bebas Neue',sans-serif;font-size:10px;letter-spacing:0.4em;color:var(--grey);margin-bottom:20px;">Deliverables</p>
+      <div class="tag-stack">
+        <span class="tag-pill">Python Scraper (BS4 + Selenium)</span>
+        <span class="tag-pill">Price Trend Visualization</span>
+        <span class="tag-pill">Cultural Moment Timeline</span>
+        <span class="tag-pill">2-Page PDF Report</span>
+        <span class="tag-pill">Sourcing Recommendations</span>
+      </div>
+    </div>
+
+    <div class="tile p01-quote-tile">
+      <p class="quote-text">"Authenticated vintage is rare. Knowing <em>which</em> rare pieces the market wants next - that's the real competitive edge."</p>
+      <p class="quote-attr">— The Proposition, Nawal Sarwar × The NY Archive</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- DIVIDER -->
+<div class="section-divider" style="background:var(--rust);">
+  <div class="d-inner">
+    <span style="color:var(--cream);">PROJECT 02</span><span style="color:rgba(242,237,228,0.3);">—</span>
+    <span style="color:var(--cream);">THE ARCHIVE MIRROR</span><span style="color:rgba(242,237,228,0.3);">—</span>
+    <span style="color:var(--cream);">UX / POP-UP CONCEPT</span><span style="color:rgba(242,237,228,0.3);">—</span>
+    <span style="color:var(--cream);">QR</span><span style="color:rgba(242,237,228,0.3);">—</span>
+    <span style="color:var(--cream);">PROJECT 02</span><span style="color:rgba(242,237,228,0.3);">—</span>
+    <span style="color:var(--cream);">THE ARCHIVE MIRROR</span><span style="color:rgba(242,237,228,0.3);">—</span>
+    <span style="color:var(--cream);">UX / POP-UP CONCEPT</span><span style="color:rgba(242,237,228,0.3);">—</span>
+  </div>
+</div>
+
+<!-- TYPE BREAK 02 -->
+<div class="type-break">
+  <div class="tb-annotation" style="top:60px;left:60px;">← every tag tells a story</div>
+  <div class="tb-bg-num">02</div>
+  <div class="tb-big">
+    THE<br/>
+    <span class="rev" style="background:var(--rust);">TAG</span><br/>
+    <span class="gold-stroke">KNOWS</span>
+  </div>
+  <p class="tb-running">
+    What if every vintage hangtag was a portal? The Archive Mirror concept puts QR codes on your pieces - each one linking to a digital lookbook showing exactly how that garment lived in its era.
+  </p>
+</div>
+
+<!-- PROJECT 02 -->
+<div class="moodboard" style="padding-top:0;">
+  <div class="p02-grid">
+
+    <div class="tile p02-intro-tile">
+      <div>
+        <p class="proj-label">Project 02 · UX / Pop-Up · Figma + HTML</p>
+        <h2 class="p02-title">The<br/><em>Archive</em><br/>Mirror</h2>
+        <p class="p02-body">
+          Your customer already knows how to dress-up in their mother's closet. The Archive Mirror gives them the <strong>story of the closet itself</strong> - and that's the luxury you're actually selling.
+        </p>
+        <p class="p02-body" style="margin-top:12px;">
+          Scan a tag on a 1997 Mugler blazer → watch the original runway footage. Scan a 1990 Versace slip → see its Vogue Italia debut. Physical piece. Digital history. One QR code.
+        </p>
+      </div>
+      <a class="p02-cta" href="#">View Moodboard →</a>
+    </div>
+
+    <div class="tile p02-qr-tile">
+      <div class="scan-anim"></div>
+      <div class="qr-svg" id="qrBox">
+        <!-- QR pattern rows -->
+        <div class="qr-cell corner-block"></div><div class="qr-cell corner-block"></div><div class="qr-cell corner-block"></div><div class="qr-cell empty"></div><div class="qr-cell corner-block"></div><div class="qr-cell corner-block"></div><div class="qr-cell corner-block"></div>
+        <div class="qr-cell corner-block"></div><div class="qr-cell empty"></div><div class="qr-cell corner-block"></div><div class="qr-cell empty"></div><div class="qr-cell corner-block"></div><div class="qr-cell empty"></div><div class="qr-cell corner-block"></div>
+        <div class="qr-cell corner-block"></div><div class="qr-cell corner-block"></div><div class="qr-cell corner-block"></div><div class="qr-cell corner-block"></div><div class="qr-cell corner-block"></div><div class="qr-cell corner-block"></div><div class="qr-cell corner-block"></div>
+        <div class="qr-cell empty"></div><div class="qr-cell empty"></div><div class="qr-cell corner-block"></div><div class="qr-cell empty"></div><div class="qr-cell corner-block"></div><div class="qr-cell empty"></div><div class="qr-cell empty"></div>
+        <div class="qr-cell corner-block"></div><div class="qr-cell corner-block"></div><div class="qr-cell empty"></div><div class="qr-cell corner-block"></div><div class="qr-cell corner-block"></div><div class="qr-cell empty"></div><div class="qr-cell corner-block"></div>
+        <div class="qr-cell corner-block"></div><div class="qr-cell empty"></div><div class="qr-cell corner-block"></div><div class="qr-cell empty"></div><div class="qr-cell empty"></div><div class="qr-cell corner-block"></div><div class="qr-cell empty"></div>
+        <div class="qr-cell corner-block"></div><div class="qr-cell corner-block"></div><div class="qr-cell corner-block"></div><div class="qr-cell empty"></div><div class="qr-cell corner-block"></div><div class="qr-cell corner-block"></div><div class="qr-cell corner-block"></div>
+      </div>
+      <div class="qr-label"><strong>SCAN TO ENTER</strong>the digital archive</div>
+    </div>
+
+    <div class="tile p02-lookbook-tile">
+      <div class="lookbook-strips">
+        <div class="ls"></div><div class="ls"></div><div class="ls"></div>
+        <div class="ls"></div><div class="ls"></div><div class="ls"></div>
+      </div>
+      <div class="lb-overlay">
+        <div class="lb-year">1997</div>
+        <div class="lb-desc">↑ tap to see how it was styled</div>
+      </div>
+    </div>
+
+    <div class="tile p02-how-tile">
+      <div class="how-step">
+        <div class="how-step-num">01</div>
+        <div class="how-step-title">Physical Tag</div>
+        <p class="how-step-body">Every piece gets a QR-embedded hangtag - designed to match The NY Archive's aesthetic. Elegant. Understated. Functional.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">02</div>
+        <div class="how-step-title">Digital Lookbook</div>
+        <p class="how-step-body">Customer scans → lands on a curated micro-site showing the piece in its original moment. Editorial shots. Runway footage. Press clippings.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">03</div>
+        <div class="how-step-title">The Sale</div>
+        <p class="how-step-body">The story is the sell. A 1997 Mugler blazer with its original campaign image doesn't need a hard pitch. It closes itself.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MANIFESTO -->
+<div class="manifesto">
+  <div class="manifesto-bg-word">CODE</div>
+  <p class="manifesto-pre">why a CS grad + Visual Arts minor?</p>
+  <h2 class="manifesto-headline">
+    I think<br/>
+    in <em>systems.</em><br/>
+    I feel in<br/>
+    <span class="stroke">aesthetics.</span>
+  </h2>
+  <div class="manifesto-cols">
+    <div class="mc-item">
+      <p class="mc-icon">◈ &nbsp;DATA IS PROVENANCE</p>
+      <h3 class="mc-title">The best vintage pieces come with history.</h3>
+      <p class="mc-body">The best data analysis tells the same story - where something came from, where it's going, and what it's worth right now. My Brookhaven internship trained me on large-scale datasets. Fashion just makes the subject matter infinitely more interesting.</p>
+    </div>
+    <div class="mc-item">
+      <p class="mc-icon">◈ &nbsp;DESIGN IS ARGUMENT</p>
+      <h3 class="mc-title">A moodboard is not decoration.</h3>
+      <p class="mc-body">It is a point of view, made visible. My Visual Arts minor taught me that every layout decision is a claim. My CS degree taught me to back claims with systems. The combination is uncommon, and it shows in the work.</p>
+    </div>
+    <div class="mc-item">
+      <p class="mc-icon">◈ &nbsp;CODE IS CURATION</p>
+      <h3 class="mc-title">Writing a schema is an act of taste.</h3>
+      <p class="mc-body">You decide what matters, what gets tracked, what gets remembered. For archival fashion, where every piece is one-of-one, that curatorial logic in the database is everything. I build systems that understand rarity.</p>
+    </div>
+  </div>
+</div>
+
+<!-- DIVIDER -->
+<div class="section-divider" style="background:var(--ink);">
+  <div class="d-inner">
+    <span style="color:var(--gold);">PROJECT 03</span><span style="color:rgba(184,146,46,0.3);">-</span>
+    <span style="color:var(--gold);">THE INVENTORY OPTIMIZER</span><span style="color:rgba(184,146,46,0.3);">-</span>
+    <span style="color:var(--gold);">DATABASE DESIGN</span><span style="color:rgba(184,146,46,0.3);">-</span>
+    <span style="color:var(--gold);">SQL · MONGODB</span><span style="color:rgba(184,146,46,0.3);">-</span>
+    <span style="color:var(--gold);">PROJECT 03</span><span style="color:rgba(184,146,46,0.3);">-</span>
+    <span style="color:var(--gold);">THE INVENTORY OPTIMIZER</span><span style="color:rgba(184,146,46,0.3);">-</span>
+  </div>
+</div>
+
+<!-- TYPE BREAK 03 -->
+<div class="type-break" style="background:var(--warm);">
+  <div class="tb-annotation" style="bottom:80px;right:80px;transform:rotate(1.5deg);">one-of-one means<br/>zero room for chaos →</div>
+  <div class="tb-bg-num" style="color:rgba(13,11,9,0.04);">03</div>
+  <div class="tb-big">
+    ONE<br/>
+    <span class="rev">PIECE.</span><br/>
+    <span class="gold-stroke">ONE SYSTEM.</span>
+  </div>
+  <p class="tb-running">
+    Small boutiques lose revenue to inventory chaos. I designed a database schema built specifically for one-of-a-kind archival pieces - provenance, authentication notes, hold logic, and client wish-list matching in one system.
+  </p>
+</div>
+
+<!-- PROJECT 03 -->
+<div class="p03-grid" style="padding-top:0;">
+  <div class="tile p03-label-tile">
+    <div class="p03-num">03</div>
+    <h2 class="p03-title-sm">The<br/>Inventory<br/>Optimizer</h2>
+    <div style="margin-top:24px;">
+      <p class="proj-label" style="margin-bottom:12px;">Deliverables</p>
+      <div class="tag-stack">
+        <span class="tag-pill" style="color:var(--cream);border-color:rgba(255,255,255,0.15);">MongoDB / SQL Schema</span>
+        <span class="tag-pill" style="color:var(--cream);border-color:rgba(255,255,255,0.15);">Hold-Expire Logic</span>
+        <span class="tag-pill" style="color:var(--cream);border-color:rgba(255,255,255,0.15);">Wishlist Matching (Python)</span>
+        <span class="tag-pill" style="color:var(--cream);border-color:rgba(255,255,255,0.15);">Tableau Dashboard</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="tile p03-db-tile">
+    <p style="font-family:'Caveat',cursive;font-size:14px;color:var(--gold);margin-bottom:20px;">Archive Inventory - Live View</p>
+    <div class="db-table">
+      <div class="db-header-row">
+        <div class="db-h">ID</div>
+        <div class="db-h">Piece / Era</div>
+        <div class="db-h">Value</div>
+        <div class="db-h">Status</div>
+      </div>
+      <div class="db-data-row">
+        <div class="db-d piece-id">G-94-001</div>
+        <div class="db-d">Gaultier Cone Bra / SS'94</div>
+        <div class="db-d">$1,850</div>
+        <div class="db-d status-avail">● Available</div>
+      </div>
+      <div class="db-data-row">
+        <div class="db-d piece-id">V-92-018</div>
+        <div class="db-d">Versace Silk Print / FW'92</div>
+        <div class="db-d">$2,200</div>
+        <div class="db-d status-hold">● On Hold</div>
+      </div>
+      <div class="db-data-row">
+        <div class="db-d piece-id">M-99-007</div>
+        <div class="db-d">Mugler Spiral Dress / SS'99</div>
+        <div class="db-d">$3,400</div>
+        <div class="db-d status-sold">● Sold</div>
+      </div>
+      <div class="db-data-row">
+        <div class="db-d piece-id">C-96-043</div>
+        <div class="db-d">Chanel Tweed Jacket / FW'96</div>
+        <div class="db-d">$4,100</div>
+        <div class="db-d status-avail">● Available</div>
+      </div>
+      <div class="db-data-row">
+        <div class="db-d piece-id">D-01-012</div>
+        <div class="db-d">Galliano for Dior / SS'01</div>
+        <div class="db-d">$5,700</div>
+        <div class="db-d status-hold">● On Hold</div>
+      </div>
+      <div class="db-data-row">
+        <div class="db-d piece-id">P-98-029</div>
+        <div class="db-d">Prada Nylon Bag / FW'98</div>
+        <div class="db-d">$890</div>
+        <div class="db-d status-avail">● Available</div>
+      </div>
+      <div class="db-data-row">
+        <div class="db-d piece-id">A-03-055</div>
+        <div class="db-d">Alaia Laser-Cut / SS'03</div>
+        <div class="db-d">$2,600</div>
+        <div class="db-d status-avail">● Available</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tile p03-insight-tile">
+    <h2 class="insight-title">Messy<br/>inventory<br/>is <em>lost<br/>revenue.</em></h2>
+    <div class="insight-stats">
+      <div>
+        <div class="i-stat-num">1-of-1</div>
+        <div class="i-stat-label">every piece is unique. the system treats it that way.</div>
+      </div>
+      <div>
+        <div class="i-stat-num">0 hrs</div>
+        <div class="i-stat-label">wasted searching for what you already own</div>
+      </div>
+    </div>
+    <p class="insight-note">"Small boutiques often struggle with messy inventory. Showing you can build a system to fix that is an immediate hire signal." - and I built it.</p>
+  </div>
+</div>
+
+<!-- CLOSING CARD -->
+<section class="close-card">
+  <div class="cc-bg-text">HIRE</div>
+  <p class="cc-eyebrow">- ready when you are -</p>
+  <h1 class="cc-headline">
+    Let's<br/>
+    <em>build</em><br/>
+    the <span class="outline">archive.</span>
+  </h1>
+  <p class="cc-body">
+    I don't say "I think I can help." Here is how I will help: data-driven sourcing, a digital-physical pop-up experience, and an inventory system built for one-of-a-kind pieces. I'm available immediately, based in NYC, and genuinely obsessed with what you're doing.
+  </p>
+  <div class="cc-links">
+    <a class="cc-link primary" href="https://ns5504.github.io/NS_Portfolio/" target="_blank">Portfolio →</a>
+    <a class="cc-link" href="https://linkedin.com/in/nawal-sarwar/" target="_blank">LinkedIn</a>
+    <a class="cc-link" href="mailto:nawalsarwar77@gmail.com">Get in Touch</a>
+  </div>
+</section>
+
+<footer>
+  <p>NAWAL SARWAR × THE NY ARCHIVE - 2025</p>
+  <p>CS + VISUAL ARTS · NYC · DATA · DESIGN · FASHION</p>
+</footer>
+
+<script>
+const cur = document.getElementById('cur');
+const ring = document.getElementById('ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cur.style.left=mx+'px';cur.style.top=my+'px';
+});
+function animRing(){
+  rx+=(mx-rx)*0.12;
+  ry+=(my-ry)*0.12;
+  ring.style.left=rx+'px';ring.style.top=ry+'px';
+  requestAnimationFrame(animRing);
+}
+animRing();
+
+// hover cursor expand
+document.querySelectorAll('a,button,.tile').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{
+    cur.style.width='20px';cur.style.height='20px';
+    ring.style.width='56px';ring.style.height='56px';
+  });
+  el.addEventListener('mouseleave',()=>{
+    cur.style.width='12px';cur.style.height='12px';
+    ring.style.width='36px';ring.style.height='36px';
+  });
+});
+</script>
+</body>
+</html>
